@@ -18,7 +18,7 @@ export default function Feeds ({ feeds, loading }) {
     <Grid columns={1} divided>
       <Card.Group itemsPerRow={5} doubling>
         {feeds.sort((feedA, feedB) => {
-          return feedA.entry_id < feedB.entry_id;
+          return feedA.entry_id > feedB.entry_id;
         }).map(feed => {
           return <Feed key={feed.entry_id} feed={feed} />
         })}
