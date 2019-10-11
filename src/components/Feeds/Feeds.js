@@ -14,12 +14,17 @@ export default function Feeds ({ feeds, loading }) {
       </Segment>
     );
   }
+
+  var sortFeeds = function(a,b) {
+    return a.entry_id < b.entry_id ? 1 : -1;
+  };
+
+  const sortedFeeds = feeds.sort(sortFeeds);
+
   return (
     <Grid columns={1} divided>
       <Card.Group itemsPerRow={5} doubling>
-        {feeds.sort((feedA, feedB) => {
-          return feedA.entry_id < feedB.entry_id;
-        }).map(feed => {
+        {sortedFeeds.map(feed => {
           return <Feed key={feed.entry_id} feed={feed} />
         })}
       </Card.Group>
