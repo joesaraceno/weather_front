@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { format } from 'date-fns';
 import { Card } from 'semantic-ui-react';
 
+const Field = styled.p`
+  font-size: 22px;
+`;
+
 const determineColor = (temp) => {
   switch(true) {
     case (temp < 20): 
@@ -23,12 +27,6 @@ const determineColor = (temp) => {
       return 'red';
   }
 };
-
-// redorangeyellowolivegreentealbluevioletpurplepinkbrowngreyblack
-
-const Field = styled.p`
-  font-size: 22px;
-`;
 
 export default function Feed ({ feed }) {
   const { created_at, entry_id, field1 } = feed;
