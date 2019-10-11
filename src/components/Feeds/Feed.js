@@ -41,7 +41,6 @@ export default function Feed ({ feed }) {
         <Card.Meta>Entry# {entry_id}</Card.Meta>
         <Card.Description>
           <Field><b>{ field1 }</b> &deg;F</Field>
-          {/* <Field>Feels { color }</Field> */}
           <Field>{ formattedSampleDate }</Field>
         </Card.Description>
       </Card.Content>

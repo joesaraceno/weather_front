@@ -51,7 +51,7 @@ class App extends Component {
           <h4 className="ui center aligned header">ID# { channelId }</h4>
           <FeedWrapper className="ui container">
             <ButtonWrapper>
-              <Button onClick={(e) => {this.getResults(e)}} color="teal">Get Newer Readings</Button>
+              <Button onClick={(e) => {this.getResults(e)}} color="teal">Newest Readings</Button>
             </ButtonWrapper>
             <Feeds feeds={feeds} loading={loading}></Feeds>
           </FeedWrapper>
