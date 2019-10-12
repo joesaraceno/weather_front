@@ -13,7 +13,7 @@ const addMetaToFeeds = (feeds) => {
   feeds.forEach((feed, index) => {
     const thisTemp = feed.field1;
     if (index < 1) {
-      return feed.trend = 0;
+      return feed.trend = null;
     }
     const lastTemp = feeds[index-1].field1;
     if (lastTemp < thisTemp) {

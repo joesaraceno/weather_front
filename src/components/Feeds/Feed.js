@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { format } from 'date-fns';
 import { Card } from 'semantic-ui-react';
 
+import FeedTrend from './FeedTrend';
+
 const Time = styled.p`
   font-size: 18px;
 `;
@@ -45,7 +47,9 @@ export default function Feed ({ feed }) {
         </Card.Description>
         <Card.Meta>Entry# {entry_id}</Card.Meta>
       </Card.Content>
-      <Card.Content extra textAlign='center'>{ trend }</Card.Content>
+      <Card.Content extra textAlign='right'>
+        <FeedTrend trend={trend}></FeedTrend>
+      </Card.Content>
     </Card>
   )
 }
