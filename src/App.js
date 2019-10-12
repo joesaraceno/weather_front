@@ -44,6 +44,11 @@ const HeadingWrapper = styled.div`
   max-width: 300px;
 `;
 
+const TimeZone = styled.span`
+  font-size:12px;
+  color: #A9A9A9;
+`;
+
 class App extends Component {
 
   constructor(props) {
@@ -73,7 +78,7 @@ class App extends Component {
           <HeadingWrapper>
             <Header as='h2' textAlign='center'>{ name }</Header>
             <Header as='h4' textAlign='center'>{ description }</Header>
-            <Header as='h4' textAlign='center'> { latestDate }</Header>
+            <Header as='h4' textAlign='center'>{ latestDate } <TimeZone>MDT</TimeZone></Header>
             <SubHeading >Channel #{ channelId }</SubHeading>
           </HeadingWrapper>
           <FeedWrapper className="ui container">
