@@ -70,7 +70,8 @@ class App extends Component {
     } else if (!this.state.errMessage && this.state.results) {
       const { loading, results } = this.state;
       const { channel, feeds } = results;
-      const { name, description } = channel;
+      const { name, description, metadata } = channel;
+      const { status, timezone } = JSON.parse(metadata);
       const channelId = channel.id;
       const latestDate = this.getDateOfLatestResult(feeds[0]);
       return (
@@ -78,6 +79,8 @@ class App extends Component {
           <HeadingWrapper>
             <Header as='h2' textAlign='center'>{ name }</Header>
             <Header as='h4' textAlign='center'>{ description }</Header>
+            {/* TODO replace timezone with the one from channel metadata
+            TODO add channel status */}
             <Header as='h4' textAlign='center'>{ latestDate } <TimeZone>MDT</TimeZone></Header>
             <SubHeading >Channel #{ channelId }</SubHeading>
           </HeadingWrapper>
@@ -90,7 +93,7 @@ class App extends Component {
         </PageContainer>
       );
     }
-    return <Fragment></Fragment>
+    return (<Fragment></Fragment>);
   }
 
   // fetch results from util
