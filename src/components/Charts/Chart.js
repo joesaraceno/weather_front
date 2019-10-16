@@ -1,19 +1,10 @@
-import React from 'react';
-
 import * as d3Scale from 'd3-scale'
-
-import {
-  LineSeries, Tooltip,
-  ChartProvider, XAxis, YAxis,
-} from 'rough-charts'
-
 import { format } from 'date-fns';
+import _ from 'lodash';
+import React from 'react';
+import { LineSeries, Tooltip, ChartProvider, XAxis, YAxis } from 'rough-charts';
 
-const colors = [
-  '#EACA5C',
-  '#C4513D',
-  '#4F5E76'
-];
+import { determineColor } from '../../utils/TemperatureUtils';
 
 const mapValues = (data) => {
   data = data.reverse();
@@ -27,13 +18,28 @@ const mapValues = (data) => {
   });
 }
 
+const determineMostOccuringColor = (data) => {
+  const colorMap = {};
+  data.forEach(datum => {
+    const { temp } = datum;
+    const color = determineColor(temp);
+    if (_.isUndefined(colorMap[color])) {
+      colorMap[color] = 0;
+    } else {
+      colorMap[color] += 1;
+    }
+  });
+  return _.maxBy(_.keys(colorMap), function (color) { return colorMap[color]; });
+
+}
+
 const getBounds = (data) => {
   const temps = data.map(datum => Number(datum.temp));
   return [ Math.min(...temps), Math.max(...temps) ];
 }
 
 const getBuffer = (lowVal, highVal) => {
-  const range = (3 * (highVal - lowVal));
+  const range = (2 * (highVal - lowVal));
   return [ lowVal - range, highVal + range ];
 }
 
@@ -42,6 +48,7 @@ export default function Chart ({data}) {
   const mappedValues = mapValues(data);
   const [ lower, upper ] = getBounds(mappedValues);
   const [ floor, ciel ] = getBuffer(lower, upper);
+  const color = determineMostOccuringColor(mappedValues);
 
   const yScale = d3Scale
     .scaleLinear()
@@ -58,17 +65,10 @@ export default function Chart ({data}) {
       <LineSeries
         dataKey="temp"
         options={{
-          stroke: colors[0],
+          stroke: color,
           strokeWidth: 2,
         }}
       />
-      {/* <LineSeries
-        dataKey="reading"
-        options={{
-          stroke: colors[2],
-          strokeWidth: 2,
-        }}
-      /> */}
       <Tooltip />
     </ChartProvider>
   );
