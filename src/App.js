@@ -9,6 +9,7 @@ import { getTemperatureFeeds } from './utils/TemperatureUtils';
 
 // components
 import Feeds from './components/Feeds/Feeds';
+import Chart from './components/Charts/Chart';
 
 // styled components
 const PageContainer = styled.div`
@@ -22,6 +23,13 @@ const PageContainer = styled.div`
 
 const FeedWrapper = styled.div`
   margin-top: 2em;
+  height: 50%;
+`;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  height: 50%;
+  margin-top: 2em;  
 `;
 
 const ButtonWrapper = styled.div`
@@ -86,10 +94,14 @@ class App extends Component {
           </HeadingWrapper>
           <FeedWrapper className="ui container">
             <ButtonWrapper>
-              <Button color="teal" onClick={() => {this.getResults()}}>Get New Readings</Button>
+              <Button color="teal" onClick={ () => { this.getResults() } }>Get New Readings</Button>
             </ButtonWrapper>
-            <Feeds feeds={feeds} loading={loading}></Feeds>
+            <Feeds feeds={ feeds } loading={ loading }></Feeds>
           </FeedWrapper>
+          <ChartWrapper>
+            <Chart data={ feeds } />
+          </ChartWrapper>
+
         </PageContainer>
       );
     }
@@ -120,3 +132,57 @@ class App extends Component {
 };
 
 export default App;
+
+
+// import * as React from 'react'
+// import {
+//   LineSeries, Tooltip,
+//   ChartProvider, XAxis, YAxis,
+// } from 'rough-charts'
+// // import { colors } from './colors'
+
+// const colors = [
+//   '#EACA5C',
+//   '#C4513D',
+//   '#4F5E76'
+// ];
+
+// const data = [
+//   { name: 'A', value1: 30, value2: 35 },
+//   { name: 'B', value1: 90, value2: 17 },
+//   { name: 'C', value1: 50, value2: 23 },
+//   { name: 'D', value1: 40, value2: 15 },
+//   { name: 'E', value1: 70, value2: 39 },
+//   { name: 'G', value1: 30, value2: 25 },
+//   { name: 'H', value1: 100, value2: 31 },
+//   { name: 'I', value1: 110, value2: 32 },
+// ]
+
+// export default function App () {
+//   return (
+
+//     <ChartProvider
+//       height={400}
+//       data={data}
+//     >
+//       <XAxis dataKey="name" />
+//       <YAxis />
+//       <LineSeries
+//         dataKey="value1"
+//         options={{
+//           stroke: colors[0],
+//           strokeWidth: 2,
+//         }}
+//       />
+//       <LineSeries
+//         dataKey="value2"
+//         options={{
+//           stroke: colors[3],
+//           strokeWidth: 2,
+//         }}
+//       />
+//       <Tooltip />
+//     </ChartProvider>
+//   )
+// }
+
