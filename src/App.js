@@ -11,6 +11,8 @@ import { getTemperatureFeeds } from './utils/TemperatureUtils';
 import Feeds from './components/Feeds/Feeds';
 import Chart from './components/Charts/Chart';
 
+import './index.css'
+
 // styled components
 const PageContainer = styled.div`
   height: 100%;
@@ -29,9 +31,11 @@ const FeedWrapper = styled.div`
 const ChartWrapper = styled.div`
   width: 100%;
   height: 50%;
-  margin-top: 2em;  
-  font-family: 'Patrick Hand', cursive;
-  font-size: 16px;
+  margin-top: 2em;
+  font-family: 'Walter Turncoat', cursive;
+  /* font-family: 'Aprils Standard', cursive; */
+  /* font-family: 'Patrick Hand', cursive; */
+  font-size: 14px;
 `;
 
 const ButtonWrapper = styled.div`
