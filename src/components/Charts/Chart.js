@@ -13,7 +13,7 @@ const mapValues = (data) => {
     return { 
       reading: entry_id,
       temp: field1,
-      time: format(new Date(created_at), 'hh:mm:ss'),
+      time: format(new Date(created_at), 'hh:mm'),
     }
   });
 }
@@ -40,7 +40,9 @@ const getBounds = (data) => {
 
 const getBuffer = (lowVal, highVal) => {
   const range = (2 * (highVal - lowVal));
-  return [ lowVal - range, highVal + range ];
+  const lowBound = Math.round(lowVal - range);
+  const highBound = Math.round(highVal + range);
+  return [ lowBound, highBound ];
 }
 
 export default function Chart ({data}) {
