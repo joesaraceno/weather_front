@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { format } from 'date-fns';
 import { Card } from 'semantic-ui-react';
 
+
+import { determineColor } from '../../utils/TemperatureUtils';
 import FeedTrend from './FeedTrend';
 
 const Time = styled.p`
@@ -12,27 +14,6 @@ const Time = styled.p`
 const Temp = styled.p`
   font-size: 22px;
 `;
-
-const determineColor = (temp) => {
-  switch(true) {
-    case (temp < 20): 
-      return 'white';
-    case (temp < 40):
-      return 'blue';
-    case (temp < 60): 
-      return 'purple';
-    case (temp < 70):
-      return 'green';
-    case (temp < 80):
-      return 'yellow';
-    case (temp < 90):
-      return 'orange';
-    case (temp < 100):
-      return 'orange';
-    default:
-      return 'red';
-  }
-};
 
 export default function Feed ({ feed }) {
   const { created_at, entry_id, field1, trend } = feed;

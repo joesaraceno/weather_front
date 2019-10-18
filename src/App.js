@@ -9,6 +9,7 @@ import { getTemperatureFeeds } from './utils/TemperatureUtils';
 
 // components
 import Feeds from './components/Feeds/Feeds';
+import Chart from './components/Charts/Chart';
 
 // styled components
 const PageContainer = styled.div`
@@ -22,6 +23,15 @@ const PageContainer = styled.div`
 
 const FeedWrapper = styled.div`
   margin-top: 2em;
+  height: 50%;
+`;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  height: 50%;
+  margin-top: 2em;  
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -35,7 +45,7 @@ const SubHeading = styled.p`
   text-align: center;
   font-size: 12px;
   color: grey;
-  opacity: .6;
+  opacity: 0.6;
   margin-bottom: 0;
   padding-bottom: 0;
 `;
@@ -45,7 +55,7 @@ const HeadingWrapper = styled.div`
 `;
 
 const TimeZone = styled.span`
-  font-size:12px;
+  font-size: 12px;
   color: #A9A9A9;
 `;
 
@@ -86,10 +96,14 @@ class App extends Component {
           </HeadingWrapper>
           <FeedWrapper className="ui container">
             <ButtonWrapper>
-              <Button color="teal" onClick={() => {this.getResults()}}>Get New Readings</Button>
+              <Button color="teal" onClick={ () => { this.getResults() } }>Get New Readings</Button>
             </ButtonWrapper>
-            <Feeds feeds={feeds} loading={loading}></Feeds>
+            <Feeds feeds={ feeds } loading={ loading }></Feeds>
           </FeedWrapper>
+          <ChartWrapper>
+            <Chart data={ feeds } />
+          </ChartWrapper>
+
         </PageContainer>
       );
     }
@@ -120,3 +134,4 @@ class App extends Component {
 };
 
 export default App;
+
