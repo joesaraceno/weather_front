@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { Button, Header } from 'semantic-ui-react';
 import { format } from 'date-fns';
 
+// styles
+import './fonts.css';
+
 // utils
 import { getTemperatureFeeds } from './utils/TemperatureUtils';
 
@@ -11,7 +14,6 @@ import { getTemperatureFeeds } from './utils/TemperatureUtils';
 import Feeds from './components/Feeds/Feeds';
 import Chart from './components/Charts/Chart';
 
-import './index.css'
 
 // styled components
 const PageContainer = styled.div`
@@ -32,10 +34,8 @@ const ChartWrapper = styled.div`
   width: 100%;
   height: 50%;
   margin-top: 2em;
-  font-family: 'Walter Turncoat', cursive;
-  /* font-family: 'Aprils Standard', cursive; */
-  /* font-family: 'Patrick Hand', cursive; */
-  font-size: 14px;
+  font-family: 'Waterlily', cursive;
+  font-size: 13px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -102,10 +102,10 @@ class App extends Component {
             <ButtonWrapper>
               <Button color="teal" onClick={ () => { this.getResults() } }>Get New Readings</Button>
             </ButtonWrapper>
-            <Feeds feeds={ feeds } loading={ loading }></Feeds>
+            <Feeds loading={ loading } feeds={ feeds } />
           </FeedWrapper>
           <ChartWrapper>
-            <Chart data={ feeds } />
+            <Chart loading={ loading } data={ feeds } />
           </ChartWrapper>
 
         </PageContainer>

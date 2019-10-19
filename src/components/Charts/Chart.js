@@ -4,7 +4,11 @@ import _ from 'lodash';
 import React from 'react';
 import { LineSeries, Tooltip, ChartProvider, XAxis, YAxis } from 'rough-charts';
 
-import { determineColor } from '../../utils/TemperatureUtils';
+import { Dimmer, Image, Loader, Segment } from 'semantic-ui-react';
+
+import { determineChartColor } from '../../utils/TemperatureUtils';
+
+import loaderImage from '../../assets/short-paragraph.png';
 
 const mapValues = (data) => {
   data = data.reverse();
@@ -22,7 +26,7 @@ const determineMostOccuringColor = (data) => {
   const colorMap = {};
   data.forEach(datum => {
     const { temp } = datum;
-    const color = determineColor(temp);
+    const color = determineChartColor(temp);
     if (_.isUndefined(colorMap[color])) {
       colorMap[color] = 0;
     } else {
@@ -33,28 +37,42 @@ const determineMostOccuringColor = (data) => {
 
 }
 
-const getBounds = (data) => {
+const getRange = (data) => {
   const temps = data.map(datum => Number(datum.temp));
-  return [ Math.min(...temps), Math.max(...temps) ];
+  const [ floor, ciel ] = getBuffer(Math.min(...temps), Math.max(...temps));
+  return d3Scale
+    .scaleLinear()
+    .domain([floor, ciel]);
 }
 
 const getBuffer = (lowVal, highVal) => {
-  const range = (2 * (highVal - lowVal));
-  const lowBound = Math.round(lowVal - range);
-  const highBound = Math.round(highVal + range);
+  const range = Math.round(2 * (highVal - lowVal));
+  let lowBound = Math.round(lowVal - range);
+  let highBound = Math.round(highVal + range);
+  // case to handle very narrow range and pad more
+  if (range < 1) {
+    lowBound -= 0.5;
+    highBound += 0.5;
+  }
   return [ lowBound, highBound ];
 }
 
-export default function Chart ({data}) {
+export default function Chart ({ data, loading }) {
+
+  if (loading) {
+    return (
+      <Segment>
+        <Dimmer active inverted>
+          <Loader inverted content='Loading' />
+        </Dimmer>
+        <Image src={ loaderImage } alt="Loading" />
+      </Segment>
+    );
+  }
 
   const mappedValues = mapValues(data);
-  const [ lower, upper ] = getBounds(mappedValues);
-  const [ floor, ciel ] = getBuffer(lower, upper);
   const color = determineMostOccuringColor(mappedValues);
-
-  const yScale = d3Scale
-    .scaleLinear()
-    .domain([floor, ciel])
+  const yScale = getRange(mappedValues);
 
   return (
     <ChartProvider

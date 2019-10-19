@@ -2,7 +2,8 @@ import React from 'react';
 import { Card, Dimmer, Grid, Image, Loader, Segment } from 'semantic-ui-react';
 
 import Feed from './Feed';
-import loaderImage from './short-paragraph.png';
+
+import loaderImage from '../../assets/short-paragraph.png';
 
 const sortFeeds = function(a, b) {
   return a.entry_id < b.entry_id ? 1 : -1;

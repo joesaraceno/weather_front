@@ -1,0 +1,14 @@
+
+/* waterlily-regular - latin */
+@font-face {
+  font-family: 'Waterlily';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/waterlily/Waterlily-Script.eot') format('eot');
+  src: local('Waterlily'), local('Water Lily'),
+      url('./fonts/waterlily/Waterlily-Script.woff2') format('woff2'), /* Super Modern Browsers */
+      url('./fonts/waterlily/Waterlily-Script.woff') format('woff'), /* Modern Browsers */
+      url('./fonts/waterlily/Waterlily-Script.ttf') format('truetype'), /* Safari, Android, iOS */
+      url('./fonts/waterlily/Waterlily-Script.svg') format('svg'),
+      url('./fonts/waterlily/Waterlily-Script.otf') format('opentype');
+}

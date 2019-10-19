@@ -24,9 +24,31 @@ export function determineColor(temp) {
       return 'yellow';
     case (temp < 90):
       return 'orange';
-    case (temp < 100):
+    case (temp < 100): 
       return 'orange';
     default:
       return 'red';
   }
 };
+
+export function determineChartColor (temp) {
+  const color = determineColor(temp);
+  switch(color) {
+    case ('white'):
+      return '#D6D6D6';
+    case ('blue'):
+      return '#6262FF';
+    case ('purple'):
+      return '#80006B';
+    case ('green'):
+      return '#58A758';
+    case ('yellow'):
+      return '#FFBA00';
+    case ('orange'):
+      return '#FF7B00';
+    case ('red'):
+      return '#CE3131';
+    default:
+      throw new Error("no color defined")
+  }
+}
