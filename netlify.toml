@@ -1,4 +1,4 @@
 [build]
-  Command = "npm run build"
+  Command = "make build"
   functions = "./.netlify/functions"
   Publish = "public"
