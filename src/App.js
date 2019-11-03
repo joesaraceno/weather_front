@@ -100,7 +100,7 @@ class App extends Component {
           </HeadingWrapper>
           <FeedWrapper className="ui container">
             <ButtonWrapper>
-              <Button color="teal" onClick={ () => { this.getResults() } }>Get New Readings</Button>
+              <Button color="teal" disabled={ loading ? true : false } onClick={ () => { this.getResults() } }>Get New Readings</Button>
             </ButtonWrapper>
             <Feeds loading={ loading } feeds={ feeds } />
           </FeedWrapper>
