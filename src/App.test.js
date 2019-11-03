@@ -1,9 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, waitForElement, fireEvent } from "@testing-library/react";
+import '@testing-library/jest-dom/extend-expect';
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+it('renders the app', async () => {
+  const { getByRole } =  render (<App />);
+  const button = await waitForElement(() => getByRole("button"));
+  expect(button).toHaveTextContent('Get New Readings')
+  fireEvent.click(button);
+  expect(button).toHaveAttribute('disabled');
 });
