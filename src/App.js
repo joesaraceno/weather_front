@@ -1,18 +1,19 @@
 // libs
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { Button, Header } from 'semantic-ui-react';
+import { Dimmer, Image, Loader, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
 
 // styles
 import './fonts.css';
+import loaderImage from './assets/short-paragraph.png'
 
 // utils
 import { getTemperatureFeeds } from './utils/TemperatureUtils';
 
 // components
-import Feeds from './components/Feeds/Feeds';
-import Chart from './components/Charts/Chart';
+import HeaderWrapper from './components/Layout/Header/HeaderWrapper';
+import Main from './components/Layout/Main/Main';
 
 
 // styled components
@@ -25,44 +26,6 @@ const PageContainer = styled.div`
   align-items: center;
 `;
 
-const FeedWrapper = styled.div`
-  margin-top: 2em;
-  height: 50%;
-`;
-
-const ChartWrapper = styled.div`
-  width: 100%;
-  height: 50%;
-  margin-top: 2em;
-  font-family: 'Waterlily', cursive;
-  font-size: 13px;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 3em;
-`;
-
-const SubHeading = styled.p`
-  text-align: center;
-  font-size: 12px;
-  color: grey;
-  opacity: 0.6;
-  margin-bottom: 0;
-  padding-bottom: 0;
-`;
-
-const HeadingWrapper = styled.div`
-  max-width: 300px;
-`;
-
-const TimeZone = styled.span`
-  font-size: 12px;
-  color: #A9A9A9;
-`;
-
 class App extends Component {
 
   constructor(props) {
@@ -73,45 +36,45 @@ class App extends Component {
       errMessage: null,
       date: null,
     }
+    this.getResults = this.getResults.bind(this);
   }
   render() {
-    if (this.state.errMessage && !this.state.results) {
+
+    if (!this.state.loading && !this.state.errMessage && this.state.results) {
+      const { results } = this.state;
+      const { channel, feeds } = results;
+      // const { name, description, metadata } = channel;
+      // const { status, timezone } = JSON.parse(metadata);
+      // const channelId = channel.id;
+      // const latestDate = this.getDateOfLatestResult(feeds[0]);
+      return (
+        <PageContainer>
+          <HeaderWrapper 
+            channel={channel}
+            latestDate={this.getDateOfLatestResult(feeds[0])}
+          />
+          <Main
+            feeds={feeds}
+            getResults={this.getResults}
+          />
+        </PageContainer>
+      );
+    }
+    if (this.state.errMessage) {
       return (
         <Fragment>
           Error: { this.state.errMessage }
         </Fragment>
       );
-    } else if (!this.state.errMessage && this.state.results) {
-      const { loading, results } = this.state;
-      const { channel, feeds } = results;
-      const { name, description, metadata } = channel;
-      const { status, timezone } = JSON.parse(metadata);
-      const channelId = channel.id;
-      const latestDate = this.getDateOfLatestResult(feeds[0]);
-      return (
-        <PageContainer>
-          <HeadingWrapper>
-            <Header as='h2' textAlign='center'>{ name }</Header>
-            <Header as='h4' textAlign='center'>{ description }</Header>
-            {/* TODO replace timezone with the one from channel metadata
-            TODO add channel status */}
-            <Header as='h4' textAlign='center'>{ latestDate } <TimeZone>MDT</TimeZone></Header>
-            <SubHeading >Channel #{ channelId }</SubHeading>
-          </HeadingWrapper>
-          <FeedWrapper className="ui container">
-            <ButtonWrapper>
-              <Button color="teal" disabled={ loading ? true : false } onClick={ () => { this.getResults() } }>Get New Readings</Button>
-            </ButtonWrapper>
-            <Feeds loading={ loading } feeds={ feeds } />
-          </FeedWrapper>
-          <ChartWrapper>
-            <Chart loading={ loading } data={ feeds } />
-          </ChartWrapper>
-
-        </PageContainer>
-      );
-    }
-    return (<Fragment></Fragment>);
+    } 
+    return (
+      <Segment>
+        <Dimmer active inverted>
+          <Loader inverted content='Loading' />
+        </Dimmer>
+        <Image src={ loaderImage } alt="Loading" />
+      </Segment>
+    );
   }
 
   // fetch results from util

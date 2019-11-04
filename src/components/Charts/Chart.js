@@ -2,13 +2,9 @@ import * as d3Scale from 'd3-scale'
 import { format } from 'date-fns';
 import _ from 'lodash';
 import React from 'react';
+
 import { LineSeries, Tooltip, ChartProvider, XAxis, YAxis } from 'rough-charts';
-
-import { Dimmer, Image, Loader, Segment } from 'semantic-ui-react';
-
 import { determineChartColor } from '../../utils/TemperatureUtils';
-
-import loaderImage from '../../assets/short-paragraph.png';
 
 const mapValues = (data) => {
   data = data.reverse();
@@ -57,39 +53,31 @@ const getBuffer = (lowVal, highVal) => {
   return [ lowBound, highBound ];
 }
 
-export default function Chart ({ data, loading }) {
-
-  if (loading) {
+export default function Chart ({ data }) {
+  if (data){
+    const mappedValues = mapValues(data);
+    const color = determineMostOccuringColor(mappedValues);
+    const yScale = getRange(mappedValues);
+  
     return (
-      <Segment>
-        <Dimmer active inverted>
-          <Loader inverted content='Loading' />
-        </Dimmer>
-        <Image src={ loaderImage } alt="Loading" />
-      </Segment>
+      <ChartProvider
+        height={400}
+        data={mappedValues}
+        yScale={yScale}
+      >
+        <XAxis dataKey="time" />
+        <YAxis />
+        <LineSeries
+          dataKey="temp"
+          options={{
+            stroke: color,
+            strokeWidth: 2,
+          }}
+        />
+        <Tooltip />
+      </ChartProvider>
     );
+
   }
-
-  const mappedValues = mapValues(data);
-  const color = determineMostOccuringColor(mappedValues);
-  const yScale = getRange(mappedValues);
-
-  return (
-    <ChartProvider
-      height={400}
-      data={mappedValues}
-      yScale={yScale}
-    >
-      <XAxis dataKey="time" />
-      <YAxis />
-      <LineSeries
-        dataKey="temp"
-        options={{
-          stroke: color,
-          strokeWidth: 2,
-        }}
-      />
-      <Tooltip />
-    </ChartProvider>
-  );
+  return null
 }

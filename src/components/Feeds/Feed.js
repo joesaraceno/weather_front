@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { format } from 'date-fns';
 import { Card } from 'semantic-ui-react';
 
-
 import { determineColor } from '../../utils/TemperatureUtils';
 import FeedTrend from './FeedTrend';
 

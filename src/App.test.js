@@ -9,4 +9,5 @@ it('renders the app', async () => {
   expect(button).toHaveTextContent('Get New Readings')
   fireEvent.click(button);
   expect(button).toHaveAttribute('disabled');
+  
 });
